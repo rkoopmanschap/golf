@@ -2,17 +2,18 @@ class Player
 
 	attr_accessor :player_number
 
-	def initialize(player_number, strategy)
+	def initialize(player_number, strategy_class, table)
 		@player_number = player_number
-		@strategy = strategy
+		@table = table
+		@strategy = strategy_class.new(player_number, table)
 	end
 
-	def pick_move(table)
-		return @strategy.pick_move(table, @player_number)
+	def pick_move
+		return @strategy.pick_move
 	end
 
-	def pick_target_card(move, table)
-		return @strategy.pick_target_card(move, table, @player_number)
+	def pick_target_card
+		return @strategy.pick_target_card
 	end
 
 end

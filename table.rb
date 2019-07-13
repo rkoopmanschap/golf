@@ -18,10 +18,11 @@ class Table
 			:king, :king, :king, :king,
 			:ace, :ace, :ace, :ace
 		]
+		@number_of_players = number_of_players
 		@closed_card_stack = []
 		@open_card_stack = []
 		@all_player_cards = []
-		number_of_players.times do |player_number|
+		@number_of_players.times do |player_number|
 			@all_player_cards.push([
 				{ number: 0, position: :top_left, card: nil, opened: false, player_number: player_number },
 				{ number: 1, position: :top_middle, card: nil, opened: false, player_number: player_number },
@@ -44,16 +45,10 @@ class Table
 
 		number_of_cards = 6
 		number_of_cards.times do |card_number|
-			# puts "@closed_card_stack.size = #{@closed_card_stack.size}"
 			card = @closed_card_stack.pop
-			# puts "@closed_card_stack.size = #{@closed_card_stack.size}"
-			# puts "card = #{card}"
 			current_card = this_player_cards[card_number]
-			# puts "current_card = #{current_card}"
 			current_card[:card] = card
 			current_card[:opened] = false
-			# puts "current_card_changed = #{current_card}"
-			# raise
 		end
 	end
 
@@ -76,6 +71,8 @@ class Table
 			# do nothing
 		elsif(move == :swap_card)
 			# do nothing
+		else
+			raise "Move not recognized: #{move}"
 		end
 	end
 
@@ -122,15 +119,30 @@ class Table
 	end
 
 	def print_table
-		puts "closed_card_stack"
-		puts @closed_card_stack.size
-		puts "open_card_stack"
-		puts @open_card_stack.size
+		puts "closed_card_stack: #{@closed_card_stack.size}"
+		puts "open_card_stack: #{@open_card_stack.size}, #{@open_card_stack.last}"
 		puts "all_player_cards"
-		puts @all_player_cards
+		@number_of_players.times do |player_number|
+			print_player_cards(player_number)
+		end
 		puts "scores"
 		@all_player_cards.size.times do |player_number| 
 			puts "player_number #{player_number}: score: #{calculate_score(player_number)}"
+		end
+	end
+
+	def print_player_cards(player_number)
+		player_cards = @all_player_cards[player_number]
+		puts "=== Player #{player_number} ==="
+		puts "#{print_card(player_cards[0])} #{print_card(player_cards[1])} #{print_card(player_cards[2])}"
+		puts "#{print_card(player_cards[3])} #{print_card(player_cards[4])} #{print_card(player_cards[5])}"
+	end
+
+	def print_card(player_card)
+		if(player_card[:opened])
+			return player_card[:card].to_s.rjust(10)
+		else 
+			return "*#{player_card[:card]}*".rjust(10)
 		end
 	end
 

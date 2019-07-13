@@ -3,9 +3,9 @@ class Golf
 	def initialize
 		@table = Table.new
 		@players = []
-		@players.push(Player.new(0, DefaultStrategy.new))
-		@players.push(Player.new(1, DefaultStrategy.new))
-		@players.push(Player.new(2, DefaultStrategy.new))
+		@players.push(Player.new(0, DefaultStrategy, @table))
+		@players.push(Player.new(1, DefaultStrategy, @table))
+		@players.push(Player.new(2, DefaultStrategy, @table))
 		@current_turn = 0
 	end
 
@@ -47,9 +47,9 @@ class Golf
 	end
 
 	def play_turn(player)
-		move = player.pick_move(@table)
+		move = player.pick_move
 		@table.process_move(move)
-		target_card = player.pick_target_card(move, @table)
+		target_card = player.pick_target_card
 		@table.process_target_card(move, target_card, player.player_number)
 		@table.process_turn_end(player.player_number)
 	end

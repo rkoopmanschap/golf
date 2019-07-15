@@ -198,8 +198,16 @@ class Table
 		when :queen then 10
 		when :king 	then 0
 		when :ace 	then -2
-		when nil 	then 0
+		when nil 	then nil
 		end
+	end
+
+	def swap_card_value
+		get_card_score(@open_card_stack.last)
+	end
+
+	def swap_card
+		return @open_card_stack.last
 	end
 
 end

@@ -11,13 +11,10 @@ class Golf
 
 	def shuffle
 		@table.shuffle
-		@table.print_table
 		@players.each do |player|
 			@table.give_cards(player.player_number)
 		end
-		@table.print_table
 		@table.open_first_card
-		@table.print_table
 		@players.each do |player|
 			@table.open_first_player_card(player.player_number)
 		end

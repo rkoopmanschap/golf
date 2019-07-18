@@ -1,6 +1,6 @@
 class Table
 
-	attr_accessor :closed_card_stack, :open_card_stack, :all_player_cards
+	attr_accessor :closed_card_stack, :open_card_stack, :all_player_cards, :number_of_players
 
 	def initialize(number_of_players=3)
 		@all_cards = [
